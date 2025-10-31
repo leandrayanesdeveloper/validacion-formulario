@@ -5,3 +5,140 @@
     border-width: 0;
     border-style: solid;
 }
+
+/* Configuraciones base (aparte de box-sizing) */
+:root {
+    --primary-color: #007bff; 
+    --secondary-color: #28a745; 
+    --background-color: #f4f4f9;
+    --text-color: #333333;
+    --border-color: #ced4da;
+    --error-color: #dc3545; 
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Ocultar el texto "Hola" si no es intencional */
+body > p:first-of-type {
+    display: none; 
+}
+
+/* Estilo del Contenedor Principal (Formulario) */
+#myForm {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Estilo del Título */
+#title {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    font-size: 2em;
+    padding-bottom: 10px;
+}
+
+/* Contenedor de cada Campo de Formulario */
+.form-div {
+    margin-bottom: 25px;
+}
+
+/* Estilo para inputs y select */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+#Countries {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Enfocar los campos */
+input:focus, #Countries:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Estilo de la Información debajo de los campos */
+.información {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding-left: 5px;
+}
+
+/* --- Estilos Específicos para el Campo de Teléfono --- */
+
+
+.form-div:nth-child(4) {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 0;
+}
+
+
+#phone-code {
+    flex-shrink: 0; 
+    padding: 12px 10px;
+    border: 1px solid var(--border-color);
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    background-color: #e9ecef;
+    color: #495057;
+    font-size: 16px;
+    margin-top: 5px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px; 
+}
+
+input[type="tel"] {
+    flex-grow: 1; 
+    margin-top: 5px;
+    border-radius: 0 5px 5px 0; 
+}
+
+
+.form-div:nth-child(4) > .información {
+    flex-basis: 100%; /* Ocupa todo el ancho debajo de los inputs */
+    margin-top: 8px;
+}
+
+
+#form-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+#form-btn:hover {
+    background-color: #1e7e34;
+}
+
