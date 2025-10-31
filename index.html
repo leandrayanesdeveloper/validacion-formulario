@@ -7,9 +7,8 @@
     <title>Validation</title>
 </head>
 <body>
-
 <form id="myForm">
-<h1 id="title" >Validation </h1>
+<h1 id="title" > Validación </h1>
 <div class="form-div"> 
     <input type="text" id="Username" placeholder="Nombre de usuario">
     <p class="información">
@@ -242,11 +241,13 @@
 </select>
 </div>
 <div class="form-div">
-    <span id="phone-code"> +58 </span>
-<input type="tel" id="phone" placeholder="Número de telefono">
-<p class="información">
-Solo debe contener números
-</p>
+    <div class="phone-group"> 
+        <span id="phone-code"> +58 </span>
+        <input type="tel" id="phone" placeholder="Número de telefono">
+    </div>
+    <p class="información">
+        Solo debe contener números
+    </p>
 </div>
 <div class="form-div">
 <input type="password" id="Password" placeholder="Contraseña">
@@ -260,6 +261,12 @@ Debe incluir al menos una mayúscula y un número, una minúscula. Min 8 caracte
 </div>
 <button id="form-btn">Registrar</button>
 </form>
+<footer>
+	Creado por <a href="https://github.com/leandrayanesdeveloper" target="_blank">Leandra Yanes</a>
+</footer>
+
     <script src="index.js"></script>
+
+
 </body>
 </html>
