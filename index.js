@@ -1,7 +1,6 @@
-
 // validacion
 /* nombre de usuario*/
-const NOMBRE_USUARIO = /^[a-zA-Z][a-zA-Z0-9-_]{4,8}$/i;
+const NOMBRE_USUARIO = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/gi;
 /* email*/
 const EMAIL =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 /*numero de telefono*/
@@ -17,16 +16,13 @@ const countries = document.querySelector('#countries');
 let usernameValidation = false;
 
 /*que solo se muestre el nombre del país y no el código (+)*/
-
 [...countries].forEach(option =>{
   option.innerHTML =  (option.innerHTML.split('(')[0]);
 })
 
-//validaciones para nombre de usuario
 usernameInput.addEventListener('input', e => {
    usernameValidation = NOMBRE_USUARIO.test(e.target.value);
    const informacion = e.target.parentElement.children[1];
-
   if (usernameValidation) {
     usernameInput.classList.remove('incorrect');
     usernameInput.classList.add('correct');
@@ -37,7 +33,3 @@ usernameInput.addEventListener('input', e => {
     informacion.classList.add('show-information');
   }
  });
-
- 
- 
-    
