@@ -1,7 +1,7 @@
 
 // validacion
 /* nombre de usuario*/
-const NOMBRE_USUARIO = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/gi;
+const NOMBRE_USUARIO = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/i;
 /* email*/
 const EMAIL =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 /*numero de telefono*/
