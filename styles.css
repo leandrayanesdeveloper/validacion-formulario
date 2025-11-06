@@ -84,7 +84,6 @@ input[type="tel"] {
     width: 100%;
     padding: 14px;
     margin-top: 5px;
-    border: 1px solid var(--border-color);
     border-radius: 8px; 
     font-size: 16px;
     color: var(--text-color-dark); 
