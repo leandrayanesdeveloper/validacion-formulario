@@ -22,25 +22,15 @@ let usernameValidation = false;
   option.innerHTML =  (option.innerHTML.split('(')[0]);
 })
 
-
+//validaciones para nombre de usuario
 usernameInput.addEventListener('input', e => {
-  const valor = e.target.value.trim(); 
-    const informacion = e.target.parentElement.children[1];
+   usernameValidation = NOMBRE_USUARIO.test(e.target.value);
+   const informacion = e.target.parentElement.children[1];
 
-    if (valor === "") {
-        usernameInput.classList.remove('correct', 'incorrect'); 
-        informacion.classList.remove('show-information');     
-        usernameValidation = false;
-        return;
-  
-  usernameValidation = NOMBRE_USUARIO.test(valor);
-
-      //validación correcta
   if (usernameValidation) {
     usernameInput.classList.remove('incorrect');
     usernameInput.classList.add('correct');
     informacion.classList.remove('show-information');
-    //validacion incorrecta
   } else {
     usernameInput.classList.remove('correct');
     usernameInput.classList.add('incorrect');
