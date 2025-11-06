@@ -186,6 +186,18 @@ input[type="tel"] {
     box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
 }
 
+.correct {
+    outline: 4px solid #4CAF50;
+}
+
+.incorrect {
+    outline: 4px solid #e74c3c;
+}
+
+.show-information {
+    display: block;
+}
+
 /* --- ESTILOS DE VALIDACIÓN (Para usar con JavaScript) --- */
 
 /*.error input,
@@ -239,14 +251,3 @@ footer a:hover {
     text-decoration: underline; 
 }
 
-.correct {
-    outline: 4px solid #4CAF50;
-}
-
-.incorrect {
-    outline: 4px solid #e74c3c;
-}
-
-.show-information {
-    display: block;
-}
