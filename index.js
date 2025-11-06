@@ -1,7 +1,7 @@
 
 // validacion
 /* nombre de usuario*/
-const NOMBRE_USUARIO = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/i;
+const NOMBRE_USUARIO = /^[a-zA-Z][a-zA-Z0-9-_]{4,8}$/i;
 /* email*/
 const EMAIL =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 /*numero de telefono*/
@@ -24,13 +24,23 @@ let usernameValidation = false;
 
 
 usernameInput.addEventListener('input', e => {
-   usernameValidation = NOMBRE_USUARIO.test(e.target.value);
-   const informacion = e.target.parentElement.children[1];
+  const valor = e.target.value.trim(); 
+    const informacion = e.target.parentElement.children[1];
 
+    if (valor === "") {
+        usernameInput.classList.remove('correct', 'incorrect'); 
+        informacion.classList.remove('show-information');     
+        usernameValidation = false;
+        return;
+  
+  usernameValidation = NOMBRE_USUARIO.test(valor);
+
+      //validación correcta
   if (usernameValidation) {
     usernameInput.classList.remove('incorrect');
     usernameInput.classList.add('correct');
     informacion.classList.remove('show-information');
+    //validacion incorrecta
   } else {
     usernameInput.classList.remove('correct');
     usernameInput.classList.add('incorrect');
