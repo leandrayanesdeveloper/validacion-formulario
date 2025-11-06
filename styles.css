@@ -100,10 +100,8 @@ input::placeholder {
 
 /* Efecto de Enfoque */
 input:focus, #countries:focus {
-    border-color: var(--primary-color);
     box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); 
     background-color: #ffffff;
-    outline: none;
 }
 
 /* --- INFORMACIÓN (Semi-transparente) --- */
