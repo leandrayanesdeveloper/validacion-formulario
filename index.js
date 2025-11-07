@@ -1,35 +1,83 @@
-// validacion
-/* nombre de usuario*/
-const NOMBRE_USUARIO = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/gi;
-/* email*/
-const EMAIL =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
-/*numero de telefono*/
-const NUMERO_TELEFONO =  /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm;
-/*contraseña*/
-const CONTRASEÑA = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,10}$/gm;
 
-//selectores 
-const  usernameInput = document.querySelector('#username');
+// 1. REGEX Y SELECTORES
+
+const NOMBRE_USUARIO_REGEX = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/; // Quité 'gi'
+const EMAIL_REGEX =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/; 
+const NUMERO_TELEFONO_REGEX = /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/; 
+const CONTRASEÑA_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,10}$/; 
+const CONFIRMAR_CONTRASEÑA_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,10}$/; 
+
+// Selectores
+const usernameInput = document.querySelector('#username');
 const countries = document.querySelector('#countries');
+const emailInput = document.querySelector('#email');
+const phoneInput = document.querySelector('#phone');
+const passwordInput = document.querySelector('#password');
+const confirmPasswordInput = document.querySelector('#confirmar-password'); 
 
-//validaciones
-let usernameValidation = false;
 
-/*que solo se muestre el nombre del país y no el código (+)*/
-[...countries].forEach(option =>{
-  option.innerHTML =  (option.innerHTML.split('(')[0]);
+// 2. FUNCIÓN CENTRALIZADA
+
+function actualizarEstadoCampo(campoInput, esValido) {
+    const mensajeError = campoInput.parentElement.children[1];
+
+    campoInput.classList.toggle('correct', esValido);
+    campoInput.classList.toggle('incorrect', !esValido);
+    mensajeError.classList.toggle('show-information', !esValido);
+}
+
+// Función para validar la confirmación de contraseña
+
+const validarConfirmacionContraseña = () => {
+    // 1. Verificar si la contraseña principal tiene al menos 8 caracteres (
+    const passwordMinLength = passwordInput.value.length >= 8;
+    // 2. Verificar si las contraseñas son iguales
+    const esIgual = passwordInput.value === confirmPasswordInput.value;
+    
+    // Es válido solo si son iguales Y la contraseña principal cumple con el requisito mínimo (si aplica)
+    const esValido = esIgual && passwordMinLength; 
+
+    actualizarEstadoCampo(confirmPasswordInput, esValido);
+};
+
+// EVENT LISTENERS
+
+/* Que solo se muestre el nombre del país y no el código (+) */
+[...countries].forEach(option => {
+    option.innerHTML = (option.innerHTML.split('(')[0]);
 })
 
+/* Nombre de Usuario */
 usernameInput.addEventListener('input', e => {
-   usernameValidation = NOMBRE_USUARIO.test(e.target.value);
-   const informacion = e.target.parentElement.children[1];
-  if (usernameValidation) {
-    usernameInput.classList.remove('incorrect');
-    usernameInput.classList.add('correct');
-    informacion.classList.remove('show-information');
-  } else {
-    usernameInput.classList.remove('correct');
-    usernameInput.classList.add('incorrect');
-    informacion.classList.add('show-information');
-  }
- });
+    // Usamos el método test() directamente ya que quitamos las banderas problemáticas 'g'
+    const usernameValidation = NOMBRE_USUARIO_REGEX.test(e.target.value);
+    actualizarEstadoCampo(usernameInput, usernameValidation);
+});
+
+/* Email */
+emailInput.addEventListener('input', e => {
+    const emailValidation = EMAIL_REGEX.test(e.target.value);
+    actualizarEstadoCampo(emailInput, emailValidation);
+});
+
+/* Teléfono */
+phoneInput.addEventListener('input', e => {
+    const phoneValidation = NUMERO_TELEFONO_REGEX.test(e.target.value);
+    actualizarEstadoCampo(phoneInput, phoneValidation);
+});
+
+/* Contraseña */
+passwordInput.addEventListener('input', e => {
+    const passwordValidation = CONTRASEÑA_REGEX.test(e.target.value);
+    actualizarEstadoCampo(passwordInput, passwordValidation);
+
+    // Al cambiar la contraseña, revalidamos la confirmación inmediatamente
+    if (confirmPasswordInput) {
+        validarConfirmacionContraseña(); 
+    }
+});
+
+/* Confirmar Contraseña */
+if (confirmPasswordInput) {
+    confirmPasswordInput.addEventListener('input', validarConfirmacionContraseña);
+}
