@@ -1,7 +1,7 @@
 
 // 1. REGEX Y SELECTORES
 
-const NOMBRE_USUARIO_REGEX = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/; // Quité 'gi'
+const NOMBRE_USUARIO_REGEX = /[a-zA-Z][a-zA-Z0-9-_]{4,8}/; 
 const EMAIL_REGEX =/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/; 
 const NUMERO_TELEFONO_REGEX = /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/; 
 const CONTRASEÑA_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,10}$/; 
@@ -24,7 +24,7 @@ function actualizarEstadoCampo(campoInput, esValido) {
     campoInput.classList.toggle('correct', esValido);
     campoInput.classList.toggle('incorrect', !esValido);
     mensajeError.classList.toggle('show-information', !esValido);
-}
+};
 
 // Función para validar la confirmación de contraseña
 
