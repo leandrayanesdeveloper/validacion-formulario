@@ -12,33 +12,37 @@ const usernameInput = document.querySelector('#username');
 const countries = document.querySelector('#countries');
 const emailInput = document.querySelector('#email');
 const phoneInput = document.querySelector('#phone');
+const phoneCode = document.querySelector('#phone-code');
 const passwordInput = document.querySelector('#password');
-const confirmPasswordInput = document.querySelector('#confirmar-password'); 
+const confirmPasswordInput = document.querySelector('#confirm-password'); 
+const formBtn = document.querySelector('#form-btn');
+const form = document.querySelector('#myForm');
+
+// validaciones
+let usernameValidation = false;
+let emailValidation = false;
+let phoneValidation = false;
+let passwordValidation = false;
+let confirmPasswordValidation = false;
+let countriesValidation = false;
 
 
 // 2. FUNCIÓN CENTRALIZADA
 
-function actualizarEstadoCampo(campoInput, esValido) {
-    const mensajeError = campoInput.parentElement.children[1];
-
-    campoInput.classList.toggle('correct', esValido);
-    campoInput.classList.toggle('incorrect', !esValido);
-    mensajeError.classList.toggle('show-information', !esValido);
+const validation = (e, validation, element) => {
+    const information = e.target.parentElement.children[1];
+    formBtn.disabled = !usernameValidation || !emailValidation || !phoneValidation || !passwordValidation || !confirmPasswordValidation || !countriesValidation ? true : false;
+    if (validation) {
+        element.classList.add('correct');
+        element.classList.remove('incorrect');
+        information.classList.remove('show-information');
+    } else {
+        element.classList.add('incorrect');
+        element.classList.remove('correct');
+        information.classList.add('show-information');
+    }
 };
 
-// Función para validar la confirmación de contraseña
-
-const validarConfirmacionContraseña = () => {
-    // 1. Verificar si la contraseña principal tiene al menos 8 caracteres (
-    const passwordMinLength = passwordInput.value.length >= 8;
-    // 2. Verificar si las contraseñas son iguales
-    const esIgual = passwordInput.value === confirmPasswordInput.value;
-    
-    // Es válido solo si son iguales Y la contraseña principal cumple con el requisito mínimo (si aplica)
-    const esValido = esIgual && passwordMinLength; 
-
-    actualizarEstadoCampo(confirmPasswordInput, esValido);
-};
 
 // EVENT LISTENERS
 
@@ -49,35 +53,62 @@ const validarConfirmacionContraseña = () => {
 
 /* Nombre de Usuario */
 usernameInput.addEventListener('input', e => {
-    // Usamos el método test() directamente ya que quitamos las banderas problemáticas 'g'
-    const usernameValidation = NOMBRE_USUARIO_REGEX.test(e.target.value);
-    actualizarEstadoCampo(usernameInput, usernameValidation);
+     usernameValidation = NOMBRE_USUARIO_REGEX.test(e.target.value);
+    validation(e, usernameValidation, usernameInput);
 });
 
 /* Email */
 emailInput.addEventListener('input', e => {
-    const emailValidation = EMAIL_REGEX.test(e.target.value);
-    actualizarEstadoCampo(emailInput, emailValidation);
+     emailValidation = EMAIL_REGEX.test(e.target.value);
+    validation(e, emailValidation, emailInput);
+});
+
+countries.addEventListener('input', e => {
+    const optionSelected = [...e.target.children].find(option => option.selected);
+    phoneCode.innerHTML = ` +${optionSelected.value} `;
+    countries.classList.add('correct');
+    countriesValidation = optionSelected.value !=='' ? true : false;
+    phoneCode.classList.add('correct');
+    validation(e, null, null);
 });
 
 /* Teléfono */
 phoneInput.addEventListener('input', e => {
-    const phoneValidation = NUMERO_TELEFONO_REGEX.test(e.target.value);
-    actualizarEstadoCampo(phoneInput, phoneValidation);
-});
-
-/* Contraseña */
-passwordInput.addEventListener('input', e => {
-    const passwordValidation = CONTRASEÑA_REGEX.test(e.target.value);
-    actualizarEstadoCampo(passwordInput, passwordValidation);
-
-    // Al cambiar la contraseña, revalidamos la confirmación inmediatamente
-    if (confirmPasswordInput) {
-        validarConfirmacionContraseña(); 
+     phoneValidation = NUMERO_TELEFONO_REGEX.test(e.target.value);
+  const information = e.target.parentElement.parentElement.children[1];
+    if (phoneValidation) {
+        phoneInput.classList.add('correct');
+        phoneInput.classList.remove('incorrect');
+        information.classList.remove('show-information');
+    } else {
+        phoneInput.classList.add('incorrect');
+        phoneInput.classList.remove('correct');
+        information.classList.add('show-information');
     }
 });
 
+
+/* Contraseña */
+passwordInput.addEventListener('input', e => {
+     passwordValidation = CONTRASEÑA_REGEX.test(e.target.value);
+    validation(e, passwordValidation, passwordInput);
+    });
+
 /* Confirmar Contraseña */
-if (confirmPasswordInput) {
-    confirmPasswordInput.addEventListener('input', validarConfirmacionContraseña);
-}
+confirmPasswordInput.addEventListener('input', (e) => {
+    confirmPasswordValidation = passwordInput.value === e.target.value;
+    validation(e, confirmPasswordValidation, confirmPasswordInput); 
+});
+ 
+// /* Envío del formulario */
+ form.addEventListener('submit', e => {
+    e.preventDefault();
+     const user = {
+        username: usernameInput.value,
+        email: emailInput.value,
+        phone: `${phoneCode.innerHTML} ${phoneInput.value}`,
+        password: passwordInput.value,
+    }
+    console.log(user);
+    
+});
